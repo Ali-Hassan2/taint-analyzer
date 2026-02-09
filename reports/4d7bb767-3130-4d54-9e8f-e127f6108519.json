@@ -1,0 +1,11 @@
+{
+  "project_id": "4d7bb767-3130-4d54-9e8f-e127f6108519",
+  "issues": [
+    {
+      "file": "benchmarks/4d7bb767-3130-4d54-9e8f-e127f6108519/one_simple_sample_code.py",
+      "line": 4,
+      "type": "pyre",
+      "description": "In call `add`, for 1st positional argument, expected `int` but got `str`."
+    }
+  ]
+}
