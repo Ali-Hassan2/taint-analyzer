@@ -1759,3 +1759,107 @@
 2026-02-09 16:44:19,846 [PID 1668] PERFORMANCE  Check_Postprocessing: 0.050s
 2026-02-09 16:44:19,848 [PID 1668] PERFORMANCE  Check (request kind: FullCheck): 46.402s
 2026-02-09 16:44:19,861 [PID 1668] ERROR Found 7 type errors!
+2026-02-09 16:51:34,265 [PID 1822] INFO No binary specified, looking for `pyre.bin` in PATH
+2026-02-09 16:51:34,267 [PID 1822] INFO Pyre binary is located at `/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/bin/pyre.bin`
+2026-02-09 16:51:34,272 [PID 1822] INFO Could not determine the number of Pyre workers from configuration. Auto-set the value to 5.
+2026-02-09 16:51:34,420 [PID 1822] INFO No typeshed specified, looking for it...
+2026-02-09 16:51:34,423 [PID 1822] INFO Found: `/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed`
+2026-02-09 16:51:34,483 [PID 1822] INFO Starting server at `/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer`...
+2026-02-09 16:51:34,484 [PID 1822] INFO Writing arguments into /tmp/pyre_arguments__5nzhqy3.json...
+2026-02-09 16:51:34,485 [PID 1822] DEBUG Arguments:
+{
+  "source_paths": {
+    "kind": "simple",
+    "paths": [
+      "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/benchmarks"
+    ]
+  },
+  "search_paths": [
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$click",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$pydantic",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$uvicorn",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$libcst",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$pydantic_core",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$anyio",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$typeguard",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$idna",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$python_multipart",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$typing_inspection",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$pip",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$starlette",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$fastapi",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$annotated_types",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$tomli_w",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$testslide",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$packaging",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$dataclasses_json",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$annotated_doc",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$tomli",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$marshmallow",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/python3.12/site-packages$h11",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stdlib",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/ExifRead",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/PyMySQL",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/PyYAML",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/aiofiles",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/chevron",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/colorama",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/ldap3",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/mysqlclient",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/paramiko",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/psycopg2",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/pycurl",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/python-dateutil",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/pytz",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/regex",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/requests",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/retry",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/tqdm",
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/venv/lib/pyre_check/typeshed/stubs/ujson"
+  ],
+  "excludes": [
+    "^venv/.*"
+  ],
+  "checked_directory_allowlist": [
+    "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/benchmarks"
+  ],
+  "checked_directory_blocklist": [],
+  "extensions": [],
+  "log_path": "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/.pyre",
+  "global_root": "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer",
+  "debug": false,
+  "python_version": {
+    "major": 3,
+    "minor": 12,
+    "micro": 3
+  },
+  "system_platform": "linux",
+  "shared_memory": {},
+  "parallel": true,
+  "number_of_workers": 5,
+  "strict": true,
+  "socket_path": "/tmp/pyre_server_783bc3bfe69ff617.sock",
+  "show_error_traces": false,
+  "additional_logging_sections": [
+    "server"
+  ],
+  "watchman_root": "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer",
+  "taint_model_paths": [],
+  "store_type_check_resolution": false,
+  "critical_files": [
+    {
+      "full_path": "/mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer/.pyre_configuration"
+    }
+  ],
+  "skip_initial_type_check": false,
+  "use_lazy_module_tracking": false,
+  "analyze_external_sources": false
+}
+2026-02-09 16:51:34,497 [PID 1822] INFO Server is starting in the background.
+
+2026-02-09 16:51:34,733 [PID 1822] INFO  Initializing file watching service...
+2026-02-09 16:51:34,745 [PID 1822] INFO  Connecting to watchman...
+2026-02-09 16:51:34,746 [PID 1822] INFO  Established watchman connection.
+2026-02-09 16:51:34,747 [PID 1822] INFO  Request watchman subscription at /mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer
+2026-02-09 16:51:34,748 [PID 1822] PERFORMANCE  Initialized shared memory (heap size: 8589934592, dep table pow: 27, hash table pow: 26): 0.004s
+2026-02-09 16:51:34,757 [PID 1822] ERROR A Pyre server is already running for the current project. Use `pyre stop` to stop it before starting another one.
