@@ -1,0 +1,47 @@
+{
+  "project_id": "6270bdf1-bc2a-4a19-9181-9a34344e0afe",
+  "issues": [
+    {
+      "file": "benchmarks/4d7bb767-3130-4d54-9e8f-e127f6108519/one_simple_sample_code.py",
+      "line": 4,
+      "type": "pyre",
+      "description": "In call `add`, for 1st positional argument, expected `int` but got `str`."
+    },
+    {
+      "file": "benchmarks/6270bdf1-bc2a-4a19-9181-9a34344e0afe/one_simple_sample_code.py",
+      "line": 8,
+      "type": "pyre",
+      "description": "Globally accessible variable `result` has type `int` but no type is specified."
+    },
+    {
+      "file": "benchmarks/6270bdf1-bc2a-4a19-9181-9a34344e0afe/one_simple_sample_code.py",
+      "line": 8,
+      "type": "pyre",
+      "description": "In call `add_numbers`, for 1st positional argument, expected `int` but got `str`."
+    },
+    {
+      "file": "benchmarks/6270bdf1-bc2a-4a19-9181-9a34344e0afe/one_simple_sample_code.py",
+      "line": 12,
+      "type": "pyre",
+      "description": "Returning `None` but no return type is specified."
+    },
+    {
+      "file": "benchmarks/6270bdf1-bc2a-4a19-9181-9a34344e0afe/one_simple_sample_code.py",
+      "line": 20,
+      "type": "pyre",
+      "description": "In call `User.__init__`, for 2nd positional argument, expected `int` but got `str`."
+    },
+    {
+      "file": "benchmarks/6270bdf1-bc2a-4a19-9181-9a34344e0afe/one_simple_sample_code.py",
+      "line": 31,
+      "type": "pyre",
+      "description": "`Optional` has no attribute `name`."
+    },
+    {
+      "file": "benchmarks/6270bdf1-bc2a-4a19-9181-9a34344e0afe/one_simple_sample_code.py",
+      "line": 40,
+      "type": "pyre",
+      "description": "In call `compute_average`, for 1st positional argument, expected `List[int]` but got `List[Union[int, int, str]]`."
+    }
+  ]
+}
