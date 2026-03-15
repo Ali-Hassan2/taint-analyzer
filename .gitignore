@@ -1,0 +1,14 @@
+# Pyre
+.pyre/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Reports (optional — agar nahi chahiye push karna)
+reports/
+benchmarks/
+
+# Env
+.env
