@@ -1,4 +1,5 @@
 import subprocess
+import shlex
 import logging
 import sys
 from pathlib import Path
@@ -10,9 +11,11 @@ logger = logging.getLogger(__name__)
 
 
 def run_pyre(project_root: str) -> tuple[list, dict]:
+    safe_cwd = str(Path(project_root).resolve())
+
     result = subprocess.run(
-        PYRE_COMMAND,
-        cwd=project_root,
+        PYRE_COMMAND,          
+        cwd=safe_cwd,          
         capture_output=True,
         text=True,
     )
