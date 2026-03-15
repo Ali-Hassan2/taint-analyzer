@@ -1,15 +1,24 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
-import os
-import uuid
-import json
-import subprocess
 import logging
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from app.analyzer.mcp_ast_scanner import MCPASTSCANNER
+from app.utils.file_utils import create_project_folder, save_report
+from app.utils.pyre_utils import run_pyre
+from constants.app_constants import (
+    PROJECT_ROOT,
+    ISSUE_TYPE_MCP,
+    SEVERITY_HIGH,
+    SEVERITY_MEDIUM,
+    SEVERITY_LOW,
+)
 
 logger = logging.getLogger(__name__)
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
+router = APIRouter()
 
 
 class CodeRequest(BaseModel):
@@ -17,121 +26,50 @@ class CodeRequest(BaseModel):
     code: str
 
 
-router = APIRouter()
-
-
 @router.post("/scan_model")
 def scan_model(request: CodeRequest):
-    logger.info(
-        "Received /scan_model request: filename=%s, code_length=%d",
-        request.filename,
-        len(request.code or ""),
+    logger.info("Scan request: %s", request.filename)
+
+    project_id, upload_folder, file_path = create_project_folder(
+        request.filename, request.code
     )
 
-    project_id = str(uuid.uuid4())
-    upload_folder = f"benchmarks/{project_id}"
-    os.makedirs(upload_folder, exist_ok=True)
-    logger.info("Created upload folder: %s (project_id=%s)", upload_folder, project_id)
+    pyre_issues, debug = run_pyre(str(PROJECT_ROOT))
+    debug.update({
+        "project_root": str(PROJECT_ROOT),
+        "upload_folder": upload_folder,
+        "file_path":     file_path,
+    })
 
-    file_path = os.path.join(upload_folder, request.filename)
-    with open(file_path, "w") as f:
-        f.write(request.code)
-    logger.info("Wrote code to file: %s", file_path)
+    ast_scanner = MCPASTSCANNER()
+    mcp_vulnerabilities = ast_scanner.scan(request.code)
 
-    logger.info(
-        "Running pyre check from project root=%s using global .pyre_configuration "
-        "to analyze benchmarks (including %s)",
-        PROJECT_ROOT,
-        upload_folder,
-    )
-    result = subprocess.run(
-        ["pyre", "check"],
-        cwd=str(PROJECT_ROOT),
-        capture_output=True,
-        text=True,
-    )
-    logger.info(
-        "Pyre finished: returncode=%s, stdout_len=%d, stderr_len=%d",
-        result.returncode,
-        len(result.stdout or ""),
-        len(result.stderr or ""),
-    )
-    if result.stderr:
-        logger.warning("Pyre stderr: %s", result.stderr)
-
-    issues = []
-    for line in (result.stdout or "").splitlines():
-        stripped = line.strip()
-        if not stripped:
-            continue
-        if ".py:" not in stripped:
-            continue
-        parts = stripped.split(":", 3)
-        if len(parts) < 4:
-            continue
-        path_part, line_part, _column_part, message_part = parts
-        try:
-            line_number = int(line_part)
-        except ValueError:
-            continue
-
-        issues.append(
-            {
-                "file": path_part,
-                "line": line_number,
-                "type": "pyre",
-                "description": message_part.strip(),
-            }
-        )
-    logger.info("Parsed %d issues from pyre stdout", len(issues))
-
-    os.makedirs("reports", exist_ok=True)
-    reports_path = f"reports/{project_id}.json"
-    with open(reports_path, "w") as f:
-        json.dump(
-            {"project_id": project_id, "issues": issues},
-            f,
-            indent=2,
-        )
-    logger.info(
-        "Wrote report file: %s (issues_count=%d)", reports_path, len(issues)
-    )
-
-   
-    logger.info(
-        "Returning response for project_id=%s with issues_count=%d",
-        project_id,
-        len(issues),
-    )
-
-
-    ast_scanner =  MCPASTSCANNER()
-    mcp_vulnerabilites_via_ast = ast_scanner(request.code)
-    all_issues = issues + [
+    all_issues = pyre_issues + [
         {
-            "file":request.filename,
-            "line":v.line,
-                "type": "mcp_vulnerability",  # pyre se alag type
-            "rule": v.rule,
-            "severity": v.severity,
+            "file":        request.filename,
+            "line":        v.line,
+            "type":        ISSUE_TYPE_MCP,
+            "rule":        v.rule,
+            "severity":    v.severity,
             "description": v.description,
-            "fix": v.fix,
+            "fix":         v.fix,
         }
-        for v in mcp_vulnerabilities_via_ast
+        for v in mcp_vulnerabilities
     ]
-     response = {
-        "project_id": project_id,
-        "issues_count": len(all_issues),
-        "issues_dets": all_issues,
-        "summary": {                        # nayi cheez — summary
-            "total": len(all_issues),
-            "high": sum(1 for v in mcp_vulnerabilities if v.severity == 'HIGH'),
-            "medium": sum(1 for v in mcp_vulnerabilities if v.severity == 'MEDIUM'),
-            "low": sum(1 for v in mcp_vulnerabilities if v.severity == 'LOW'),
-            "pyre_issues": len(issues),
-            "mcp_issues": len(mcp_vulnerabilities),
-        },
-        "debug": { ... }  # tera existing debug
-    }
-    return response
 
+    save_report(project_id, all_issues)
+
+    return {
+        "project_id":   project_id,
+        "issues_count": len(all_issues),
+        "issues_details":  all_issues,
+        "summary": {
+            "total":       len(all_issues),
+            "high":        sum(1 for v in mcp_vulnerabilities if v.severity == SEVERITY_HIGH),
+            "medium":      sum(1 for v in mcp_vulnerabilities if v.severity == SEVERITY_MEDIUM),
+            "low":         sum(1 for v in mcp_vulnerabilities if v.severity == SEVERITY_LOW),
+            "pyre_issues": len(pyre_issues),
+            "mcp_issues":  len(mcp_vulnerabilities),
+        },
+        "debug": debug,
+    }
