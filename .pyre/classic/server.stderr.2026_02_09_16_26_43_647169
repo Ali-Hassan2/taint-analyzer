@@ -1,7 +1,0 @@
-2026-02-09 16:26:43 INFO Initializing file watching service...
-2026-02-09 16:26:43 INFO Connecting to watchman...
-2026-02-09 16:26:43 INFO Established watchman connection.
-2026-02-09 16:26:43 INFO Request watchman subscription at /mnt/c/Users/HASSAN ALI/Documents/taintAnalyzer
-2026-02-09 16:26:43 PERFORMANCE Initialized shared memory (heap size: 8589934592, dep table pow: 27, hash table pow: 26): 0.002s
-2026-02-09 16:26:43 PERFORMANCE Initialized multiprocessing workers (workers: 5): 0.005s
-2026-02-09 16:26:43 INFO A Pyre server is already running for the current project. Use `pyre stop` to stop it before starting another one.

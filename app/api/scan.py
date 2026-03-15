@@ -44,9 +44,6 @@ def scan_model(request: CodeRequest):
         upload_folder,
     )
     result = subprocess.run(
-        # NOTE: The installed `pyre` here does not support `--output` or
-        # `--source-directory` flags (see debug output), so we run the plain
-        # text checker and parse its stdout ourselves.
         ["pyre", "check"],
         cwd=str(PROJECT_ROOT),
         capture_output=True,
@@ -62,15 +59,10 @@ def scan_model(request: CodeRequest):
         logger.warning("Pyre stderr: %s", result.stderr)
 
     issues = []
-    # The current Pyre version only supports human-readable output; parse it
-    # heuristically into structured issues. Typical lines look like:
-    # benchmarks/<id>/file.py:line:column: <description...>
     for line in (result.stdout or "").splitlines():
         stripped = line.strip()
         if not stripped:
             continue
-        # Only consider lines that look like file-based error reports.
-        # Require at least 3 ':' pieces and a '.py' path prefix.
         if ".py:" not in stripped:
             continue
         parts = stripped.split(":", 3)
@@ -104,7 +96,6 @@ def scan_model(request: CodeRequest):
         "Wrote report file: %s (issues_count=%d)", reports_path, len(issues)
     )
 
-    # Include some debug information to help understand Pyre behavior
     response = {
         "project_id": project_id,
         "issues_count": len(issues),
