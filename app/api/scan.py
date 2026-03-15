@@ -6,6 +6,7 @@ import json
 import subprocess
 import logging
 from pathlib import Path
+from app.analyzer.mcp_ast_scanner import MCPASTSCANNER
 
 logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -96,22 +97,41 @@ def scan_model(request: CodeRequest):
         "Wrote report file: %s (issues_count=%d)", reports_path, len(issues)
     )
 
-    response = {
-        "project_id": project_id,
-        "issues_count": len(issues),
-        "issues_dets": issues,
-        "debug": {
-            "pyre_returncode": result.returncode,
-            "pyre_stdout": result.stdout,
-            "pyre_stderr": result.stderr,
-            "project_root": str(PROJECT_ROOT),
-            "upload_folder": upload_folder,
-            "file_path": file_path,
-        },
-    }
+   
     logger.info(
         "Returning response for project_id=%s with issues_count=%d",
         project_id,
         len(issues),
     )
+
+
+    ast_scanner =  MCPASTSCANNER()
+    mcp_vulnerabilites_via_ast = ast_scanner(request.code)
+    all_issues = issues + [
+        {
+            "file":request.filename,
+            "line":v.line,
+                "type": "mcp_vulnerability",  # pyre se alag type
+            "rule": v.rule,
+            "severity": v.severity,
+            "description": v.description,
+            "fix": v.fix,
+        }
+        for v in mcp_vulnerabilities_via_ast
+    ]
+     response = {
+        "project_id": project_id,
+        "issues_count": len(all_issues),
+        "issues_dets": all_issues,
+        "summary": {                        # nayi cheez — summary
+            "total": len(all_issues),
+            "high": sum(1 for v in mcp_vulnerabilities if v.severity == 'HIGH'),
+            "medium": sum(1 for v in mcp_vulnerabilities if v.severity == 'MEDIUM'),
+            "low": sum(1 for v in mcp_vulnerabilities if v.severity == 'LOW'),
+            "pyre_issues": len(issues),
+            "mcp_issues": len(mcp_vulnerabilities),
+        },
+        "debug": { ... }  # tera existing debug
+    }
     return response
+
