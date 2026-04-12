@@ -1,0 +1,91 @@
+{
+  "project_id": "70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+  "issues": [
+    {
+      "file": "vuln_shell_true.py",
+      "line": 11,
+      "type": "mcp_vulnerability",
+      "rule": "COMMAND_INJECTION",
+      "severity": "HIGH",
+      "description": "Dangerous call 'subprocess.run' \u2014 risky in an MCP tool or agent context.",
+      "fix": "Remove, sandbox, or strictly validate inputs before calling 'subprocess.run'."
+    },
+    {
+      "file": "vuln_shell_true.py",
+      "line": 11,
+      "type": "mcp_vulnerability",
+      "rule": "SHELL_INJECTION",
+      "severity": "HIGH",
+      "description": "subprocess with shell=True and user-influenced input \u2014 command injection risk.",
+      "fix": "Use shell=False with argument lists; never pass user strings through a shell."
+    }
+  ],
+  "summary": {
+    "total": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0,
+    "pyre_issues": 0,
+    "pysa_issues": 0,
+    "mcp_issues": 2
+  },
+  "pipeline": {
+    "mcp_ast": {
+      "status": "ok",
+      "issue_count": 2
+    },
+    "pyre": {
+      "status": "failed",
+      "issue_count": 0,
+      "debug": {
+        "pyre_returncode": 6,
+        "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0"
+      }
+    },
+    "pysa": {
+      "status": "failed",
+      "issue_count": 0,
+      "debug": {
+        "pysa_returncode": 6,
+        "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+        "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0"
+      }
+    }
+  },
+  "debug": {
+    "pyre_returncode": 6,
+    "pyre_stdout": "",
+    "pyre_stderr": "\n\\u019b No binary specified, looking for `pyre.bin` in PATH\n\\u019b Invalid configuration: Cannot locate a Pyre binary to run.\n\n",
+    "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+    "pysa_returncode": 6,
+    "pysa_stdout": "",
+    "pysa_stderr": "\n\\u019b No binary specified, looking for `pyre.bin` in PATH\n\\u019b Invalid configuration: Cannot locate a Pyre binary to run.\n\n",
+    "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+    "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+    "project_root": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer",
+    "upload_folder": "benchmarks/70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+    "pipeline_stages": {
+      "mcp_ast": {
+        "status": "ok",
+        "issue_count": 2
+      },
+      "pyre": {
+        "status": "failed",
+        "issue_count": 0,
+        "debug": {
+          "pyre_returncode": 6,
+          "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0"
+        }
+      },
+      "pysa": {
+        "status": "failed",
+        "issue_count": 0,
+        "debug": {
+          "pysa_returncode": 6,
+          "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0",
+          "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\70a2d9e2-6302-467d-b2b0-90ae4fb6d2d0"
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,14 @@
 {
   "site_package_search_strategy": "pep561",
-  "source_directories": [
-    "benchmarks"
-  ],
+  "source_directories": ["app", "constants", "scanner"],
   "exclude": [
-    "^venv/.*"
+    "^venv/.*",
+    "^\\.venv/.*",
+    "^\\.pyre/.*",
+    "^reports/.*",
+    "^benchmarks/.*"
   ],
-  "strict": true
+  "search_path": ["pysa_rules/stubs"],
+  "taint_models_path": ["pysa_rules"],
+  "strict": false
 }
