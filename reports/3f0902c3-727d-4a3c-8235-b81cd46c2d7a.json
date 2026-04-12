@@ -1,0 +1,72 @@
+{
+  "project_id": "3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+  "issues": [],
+  "summary": {
+    "total": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "pyre_issues": 0,
+    "pysa_issues": 0,
+    "mcp_issues": 0
+  },
+  "pipeline": {
+    "mcp_ast": {
+      "status": "ok",
+      "issue_count": 0
+    },
+    "pyre": {
+      "status": "completed",
+      "issue_count": 0,
+      "debug": {
+        "pyre_returncode": 6,
+        "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a"
+      }
+    },
+    "pysa": {
+      "status": "completed",
+      "issue_count": 0,
+      "debug": {
+        "pysa_returncode": 6,
+        "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+        "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a"
+      }
+    }
+  },
+  "debug": {
+    "pyre_returncode": 6,
+    "pyre_stdout": "",
+    "pyre_stderr": "\n\\u019b No binary specified, looking for `pyre.bin` in PATH\n\\u019b Invalid configuration: Cannot locate a Pyre binary to run.\n\n",
+    "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+    "pysa_returncode": 6,
+    "pysa_stdout": "",
+    "pysa_stderr": "\n\\u019b No binary specified, looking for `pyre.bin` in PATH\n\\u019b Invalid configuration: Cannot locate a Pyre binary to run.\n\n",
+    "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+    "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+    "project_root": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer",
+    "upload_folder": "benchmarks/3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+    "pipeline_stages": {
+      "mcp_ast": {
+        "status": "ok",
+        "issue_count": 0
+      },
+      "pyre": {
+        "status": "completed",
+        "issue_count": 0,
+        "debug": {
+          "pyre_returncode": 6,
+          "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a"
+        }
+      },
+      "pysa": {
+        "status": "completed",
+        "issue_count": 0,
+        "debug": {
+          "pysa_returncode": 6,
+          "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a",
+          "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\3f0902c3-727d-4a3c-8235-b81cd46c2d7a"
+        }
+      }
+    }
+  }
+}

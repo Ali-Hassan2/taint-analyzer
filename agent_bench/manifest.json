@@ -1,0 +1,45 @@
+{
+  "description": "MCP-style agent fixtures for scanner regression tests.",
+  "agents": [
+    {
+      "id": "safe_minimal",
+      "path": "safe_minimal.py",
+      "must_contain_rules": []
+    },
+    {
+      "id": "vuln_command",
+      "path": "vuln_command.py",
+      "must_contain_rules": ["COMMAND_INJECTION"]
+    },
+    {
+      "id": "vuln_shell_true",
+      "path": "vuln_shell_true.py",
+      "must_contain_rules": ["SHELL_INJECTION"]
+    },
+    {
+      "id": "vuln_file",
+      "path": "vuln_file.py",
+      "must_contain_rules": ["FILE_SYSTEM_ACCESS"]
+    },
+    {
+      "id": "vuln_ssrf",
+      "path": "vuln_ssrf.py",
+      "must_contain_rules": ["SSRF"]
+    },
+    {
+      "id": "vuln_prompt",
+      "path": "vuln_prompt.py",
+      "must_contain_rules": ["PROMPT_INJECTION"]
+    },
+    {
+      "id": "vuln_deser",
+      "path": "vuln_deser.py",
+      "must_contain_rules": ["UNSAFE_DESERIALIZATION"]
+    },
+    {
+      "id": "vuln_scope",
+      "path": "vuln_scope.py",
+      "must_contain_rules": ["EXCESSIVE_TOOL_SCOPE"]
+    }
+  ]
+}

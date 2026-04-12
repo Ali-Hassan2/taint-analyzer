@@ -1,0 +1,19 @@
+{
+  "site_package_search_strategy": "pep561",
+  "source_directories": [
+    "."
+  ],
+  "exclude": [
+    "^\\.pyre/.*",
+    "^__pycache__/.*",
+    "^\\.venv/.*",
+    "^venv/.*"
+  ],
+  "search_path": [
+    "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\pysa_rules\\stubs"
+  ],
+  "taint_models_path": [
+    "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\pysa_rules"
+  ],
+  "strict": false
+}

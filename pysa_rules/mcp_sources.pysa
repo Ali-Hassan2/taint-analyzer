@@ -1,0 +1,13 @@
+# Mark function parameters as untrusted when the file lives under benchmarks/ (scanner uploads).
+# This matches paths like .../benchmarks/<uuid>/agent.py on all platforms.
+
+ModelQuery(
+  name = "mcp_benchmarks_params_user_controlled",
+  find = "functions",
+  where = path.matches(".*[/\\\\]benchmarks[/\\\\].*\\.py"),
+  model = [
+    Parameters(
+      TaintSource[UserControlled],
+    ),
+  ],
+)

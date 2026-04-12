@@ -1,0 +1,82 @@
+{
+  "project_id": "7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+  "issues": [
+    {
+      "file": "vuln_command.py",
+      "line": 11,
+      "type": "mcp_vulnerability",
+      "rule": "COMMAND_INJECTION",
+      "severity": "HIGH",
+      "description": "Dangerous call 'os.system' \u2014 risky in an MCP tool or agent context.",
+      "fix": "Remove, sandbox, or strictly validate inputs before calling 'os.system'."
+    }
+  ],
+  "summary": {
+    "total": 1,
+    "high": 1,
+    "medium": 0,
+    "low": 0,
+    "pyre_issues": 0,
+    "pysa_issues": 0,
+    "mcp_issues": 1
+  },
+  "pipeline": {
+    "mcp_ast": {
+      "status": "ok",
+      "issue_count": 1
+    },
+    "pyre": {
+      "status": "completed",
+      "issue_count": 0,
+      "debug": {
+        "pyre_returncode": 6,
+        "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053"
+      }
+    },
+    "pysa": {
+      "status": "completed",
+      "issue_count": 0,
+      "debug": {
+        "pysa_returncode": 6,
+        "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+        "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053"
+      }
+    }
+  },
+  "debug": {
+    "pyre_returncode": 6,
+    "pyre_stdout": "",
+    "pyre_stderr": "\n\\u019b No binary specified, looking for `pyre.bin` in PATH\n\\u019b Invalid configuration: Cannot locate a Pyre binary to run.\n\n",
+    "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+    "pysa_returncode": 6,
+    "pysa_stdout": "",
+    "pysa_stderr": "\n\\u019b No binary specified, looking for `pyre.bin` in PATH\n\\u019b Invalid configuration: Cannot locate a Pyre binary to run.\n\n",
+    "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+    "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+    "project_root": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer",
+    "upload_folder": "benchmarks/7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+    "pipeline_stages": {
+      "mcp_ast": {
+        "status": "ok",
+        "issue_count": 1
+      },
+      "pyre": {
+        "status": "completed",
+        "issue_count": 0,
+        "debug": {
+          "pyre_returncode": 6,
+          "pyre_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053"
+        }
+      },
+      "pysa": {
+        "status": "completed",
+        "issue_count": 0,
+        "debug": {
+          "pysa_returncode": 6,
+          "pysa_cwd": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\benchmarks\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053",
+          "pysa_output_dir": "C:\\Users\\HASSAN ALI\\Documents\\taintAnalyzer\\reports\\pysa_runs\\7f9d2c9d-7fa4-46bb-9c6c-7b9601af6053"
+        }
+      }
+    }
+  }
+}
