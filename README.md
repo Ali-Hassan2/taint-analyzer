@@ -13,5 +13,5 @@ pyre:
 
     launch:
         1- wsl
-        2- source venev/bin/activate
+        2- source venv/bin/activate
         3 uvicorn app.main:app --reload

@@ -6,6 +6,8 @@ from __future__ import annotations
 
 import logging
 import sys
+import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
@@ -56,42 +58,80 @@ def run_agentic_scan(upload_folder: str, project_id: str) -> dict[str, Any]:
       3. pysa — optional taint analysis (needs pyre.bin + models in pysa_rules/).
     """
     stages: dict[str, Any] = {}
+    started_at = time.perf_counter()
+    logger.info("Starting scan pipeline for project %s in %s", project_id, upload_folder)
 
+    mcp_started = time.perf_counter()
+    logger.info("Stage mcp_ast started for project %s", project_id)
     mcp_issues = _mcp_issues_from_project_scan(upload_folder, project_id)
     stages["mcp_ast"] = {
         "status": "ok",
         "issue_count": len(mcp_issues),
+        "duration_seconds": round(time.perf_counter() - mcp_started, 2),
     }
+    logger.info(
+        "Stage mcp_ast finished for project %s with %d issues in %.2fs",
+        project_id,
+        len(mcp_issues),
+        stages["mcp_ast"]["duration_seconds"],
+    )
 
-    pyre_issues, pyre_debug = run_pyre(upload_folder)
-    pyre_err = pyre_debug.get("pyre_stderr") or ""
+    # Run Pyre + Pysa in parallel to reduce API wait time.
+    pyre_started = time.perf_counter()
+    pysa_started = time.perf_counter()
+    logger.info("Stages pyre+pysa started in parallel for project %s", project_id)
+    try:
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            pyre_future = executor.submit(run_pyre, upload_folder)
+            pysa_future = executor.submit(run_pysa, upload_folder, project_id)
+            pyre_issues, pyre_debug = pyre_future.result()
+            pysa_issues, pysa_debug = pysa_future.result()
+    except Exception as exc:
+        logger.exception("Parallel pyre/pysa execution failed for project %s", project_id)
+        pyre_issues, pyre_debug = [], {"pyre_error": str(exc)}
+        pysa_issues, pysa_debug = [], {"pysa_error": str(exc)}
+
     if pyre_debug.get("pyre_skipped"):
         pyre_status = "skipped"
-    elif "Cannot locate" in pyre_err or "Invalid configuration" in pyre_err:
+    elif pyre_debug.get("pyre_timeout"):
         pyre_status = "failed"
-    else:
+    elif pyre_debug.get("pyre_returncode") in (0, 1):
         pyre_status = "completed"
+    else:
+        pyre_status = "failed"
     stages["pyre"] = {
         "status": pyre_status,
         "issue_count": len(pyre_issues),
+        "duration_seconds": round(time.perf_counter() - pyre_started, 2),
         "debug": {
             k: v
             for k, v in pyre_debug.items()
-            if k in ("pyre_returncode", "pyre_skipped", "reason", "pyre_cwd")
+            if k
+            in (
+                "pyre_returncode",
+                "pyre_skipped",
+                "pyre_timeout",
+                "reason",
+                "pyre_cwd",
+                "pyre_workspace",
+                "pyre_stdout",
+                "pyre_stderr",
+                "pyre_error",
+                "bash_cmd",
+            )
         },
     }
 
-    pysa_issues, pysa_debug = run_pysa(upload_folder, project_id)
-    pysa_err = pysa_debug.get("pysa_stderr") or ""
     if pysa_debug.get("pysa_skipped"):
         pysa_status = "skipped"
-    elif "Cannot locate" in pysa_err or "Invalid configuration" in pysa_err:
-        pysa_status = "failed"
-    else:
+    elif pysa_debug.get("pysa_returncode") == 0:
         pysa_status = "completed"
+    else:
+        pysa_status = "failed"
     stages["pysa"] = {
         "status": pysa_status,
         "issue_count": len(pysa_issues),
+        "duration_seconds": round(time.perf_counter() - pysa_started, 2),
         "debug": {
             k: v
             for k, v in pysa_debug.items()
@@ -99,9 +139,15 @@ def run_agentic_scan(upload_folder: str, project_id: str) -> dict[str, Any]:
             in (
                 "pysa_returncode",
                 "pysa_skipped",
+                "pysa_timeout",
                 "reason",
                 "pysa_cwd",
                 "pysa_output_dir",
+                "pysa_workspace",
+                "pysa_stdout",
+                "pysa_stderr",
+                "pysa_error",
+                "bash_cmd",
             )
         },
     }
@@ -110,9 +156,9 @@ def run_agentic_scan(upload_folder: str, project_id: str) -> dict[str, Any]:
 
     summary = {
         "total": len(all_issues),
-        "high": sum(1 for x in mcp_issues if x.get("severity") == SEVERITY_HIGH),
-        "medium": sum(1 for x in mcp_issues if x.get("severity") == SEVERITY_MEDIUM),
-        "low": sum(1 for x in mcp_issues if x.get("severity") == SEVERITY_LOW),
+        "high": sum(1 for x in all_issues if x.get("severity") == SEVERITY_HIGH),
+        "medium": sum(1 for x in all_issues if x.get("severity") == SEVERITY_MEDIUM),
+        "low": sum(1 for x in all_issues if x.get("severity") == SEVERITY_LOW),
         "pyre_issues": len(pyre_issues),
         "pysa_issues": len(pysa_issues),
         "mcp_issues": len(mcp_issues),
@@ -124,6 +170,8 @@ def run_agentic_scan(upload_folder: str, project_id: str) -> dict[str, Any]:
         "project_root": str(PROJECT_ROOT),
         "upload_folder": upload_folder,
         "pipeline_stages": stages,
+        "note": "Running all 3 stages: MCP AST + Pyre + Pysa (auto environment mode)",
+        "duration_seconds": round(time.perf_counter() - started_at, 2),
     }
 
     payload = {
