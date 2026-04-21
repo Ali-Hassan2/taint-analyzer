@@ -1,10 +1,14 @@
 import logging
 import shutil
 import subprocess
+import sys
+from pathlib import Path
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.scan import router as scan_router
+from app.utils.pyre_utils import _resolve_pyre_exe
 from constants.app_constants import PROJECT_ROOT
 
 logger = logging.getLogger(__name__)
@@ -15,22 +19,26 @@ app = FastAPI(
     version="1.0.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.on_event("startup")
 def start_pyre() -> None:
-    pyre_bin = shutil.which("pyre")
-    if not pyre_bin:
-        for candidate in (
-            PROJECT_ROOT / "venv" / "Scripts" / "pyre.exe",
-            PROJECT_ROOT / "venv" / "bin" / "pyre",
-        ):
-            if candidate.is_file():
-                pyre_bin = str(candidate)
-                break
-    if not pyre_bin:
-        logger.warning("Pyre not found on PATH or in venv; Pyre/Pysa scans may be skipped.")
-        return
-    subprocess.run([pyre_bin, "start"], cwd=str(PROJECT_ROOT), check=False)
+    """Pyre is invoked on-demand during scans, no need for persistent server."""
+    pyre_exe = _resolve_pyre_exe()
+    if pyre_exe:
+        logger.info("Pyre executable found at: %s", pyre_exe)
+    else:
+        logger.warning("Pyre executable not found; scans will be skipped")
 
 
 app.include_router(scan_router, prefix="/api/v1/scan")
