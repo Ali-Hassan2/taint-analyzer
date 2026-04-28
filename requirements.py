@@ -1,8 +1,0 @@
-pyre-check
-fastapi
-uvicorn
-python-multipart
-pytest
-httpx
-requests
-pydantic
