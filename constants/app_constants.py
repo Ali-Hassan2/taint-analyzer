@@ -14,7 +14,6 @@ ISSUE_TYPE_PYRE = "pyre"
 ISSUE_TYPE_PYSA = "pysa"
 ISSUE_TYPE_MCP = "mcp_vulnerability"
 
-# Heuristic sinks for MCP tools / agents (AST layer). Pysa adds deeper taint flows when configured.
 DANGEROUS_SINKS = {
     "os.system": ("COMMAND_INJECTION", SEVERITY_HIGH),
     "os.popen": ("COMMAND_INJECTION", SEVERITY_HIGH),
