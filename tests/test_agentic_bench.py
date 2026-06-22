@@ -1,24 +1,5 @@
 
 
-
-def _collect_rule_hits(issues: list[dict]) -> set[str]:
-    hits: set[str] = set()
-    for item in issues:
-        r = item.get("rule")
-        if r:
-            hits.add(str(r))
-    return hits
-
-
-@pytest.fixture
-def client() -> TestClient:
-    return TestClient(app)
-
-
-def test_agentic_benchmark_scan_and_store_results(client: TestClient) -> None:
-    manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
-    runs: list[dict] = []
-
     for agent in manifest["agents"]:
         path = AGENTS_DIR / agent["path"]
         code = path.read_text(encoding="utf-8")
