@@ -1,21 +1,4 @@
-"""
-HTTP-style integration tests: in-process FastAPI client posts agent code like a real client.
-Results are persisted under reports/ for inspection.
-"""
-from __future__ import annotations
 
-import json
-from pathlib import Path
-
-import pytest
-from fastapi.testclient import TestClient
-
-from app.main import app
-
-ROOT = Path(__file__).resolve().parents[1]
-MANIFEST_PATH = ROOT / "agent_bench" / "manifest.json"
-AGENTS_DIR = ROOT / "agent_bench" / "agents"
-REPORT_PATH = ROOT / "reports" / "agentic_bench_last.json"
 
 
 def _collect_rule_hits(issues: list[dict]) -> set[str]:
