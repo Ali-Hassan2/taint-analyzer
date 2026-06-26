@@ -13,10 +13,10 @@ class DocumentAnalysis(BaseModel):
     key_terms: list[str] = Field(description="Important terms in document")
 
 
-mcp = FastMCP(
-    name="Document Analyzer Agent",
-    instructions="Analyzes document content, extracts insights, and provides summaries."
-)
+# mcp = FastMCP(
+#     name="Document Analyzer Agent",
+#     instructions="Analyzes document content, extracts insights, and provides summaries."
+# )
 
 @mcp.tool()
 def extract_entities(document_text: str) -> dict:
