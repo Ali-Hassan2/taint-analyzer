@@ -18,30 +18,6 @@ mcp = FastMCP(
     instructions="Analyzes document content, extracts insights, and provides summaries."
 )
 
-
-@mcp.tool()
-def analyze_document(document_text: str) -> DocumentAnalysis:
-    """Analyze document and extract metrics and insights."""
-    words = document_text.split()
-    sentences = document_text.split('.')
-    paragraphs = document_text.split('\n\n')
-    
-    word_count = len([w for w in words if w.strip()])
-    sentence_count = len([s for s in sentences if s.strip()])
-    paragraph_count = len([p for p in paragraphs if p.strip()])
-    
-    avg_words_per_sentence = word_count / max(1, sentence_count)
-    reading_level = "Easy" if avg_words_per_sentence < 10 else "Intermediate" if avg_words_per_sentence < 20 else "Advanced"
-    
-    return DocumentAnalysis(
-        word_count=word_count,
-        sentence_count=sentence_count,
-        paragraph_count=paragraph_count,
-        reading_level=reading_level,
-        key_terms=["document", "analysis", "content"]
-    )
-
-
 @mcp.tool()
 def summarize_document(document_text: str, length: str = "medium") -> dict:
     """Generate a summary of document content."""
