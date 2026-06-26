@@ -19,21 +19,6 @@ mcp = FastMCP(
 )
 
 @mcp.tool()
-def summarize_document(document_text: str, length: str = "medium") -> dict:
-    """Generate a summary of document content."""
-    summaries = {
-        "short": "Brief overview of key points.",
-        "medium": "This document covers important topics with detailed discussion.",
-        "long": "Comprehensive analysis of all topics mentioned in the document."
-    }
-    return {
-        "full_summary": summaries.get(length, summaries["medium"]),
-        "main_points": ["First major topic", "Second key point", "Third important conclusion"],
-        "sentiment": "neutral"
-    }
-
-
-@mcp.tool()
 def extract_entities(document_text: str) -> dict:
     """Extract named entities from document."""
     return {
