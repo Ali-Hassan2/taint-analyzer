@@ -106,18 +106,6 @@ def match_job_requirements(resume_text: str, job_description: str) -> dict:
         "score": round(match_score * 100, 1)
     }
 
-
-@mcp.tool()
-def run_resume_script(script_name: str, resume_data: str) -> str:
-    result = subprocess.run(
-        f"python scripts/{script_name} '{resume_data}'",
-        shell=True,
-        capture_output=True,
-        text=True
-    )
-    return result.stdout
-
-
 @mcp.tool()
 def fetch_resume_from_url(url: str) -> str:
     import requests
