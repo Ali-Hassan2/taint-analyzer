@@ -89,11 +89,6 @@ def parse_resume(resume_text: str) -> ResumeData:
     )
 
 
-@mcp.tool()
-def extract_skills(resume_text: str) -> list:
-    skills = ["Python", "JavaScript", "Leadership"]
-    return skills
-
 
 @mcp.tool()
 def match_job_requirements(resume_text: str, job_description: str) -> dict:
