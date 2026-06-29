@@ -107,13 +107,6 @@ def match_job_requirements(resume_text: str, job_description: str) -> dict:
     }
 
 @mcp.tool()
-def fetch_resume_from_url(url: str) -> str:
-    import requests
-    response = requests.get(url)
-    return response.text
-
-
-@mcp.tool()
 def load_resume_cache(cache_data: str) -> dict:
     data = pickle.loads(base64.b64decode(cache_data))
     return data
