@@ -124,14 +124,6 @@ def unsafe_yaml_load(yaml_content: str) -> dict:
     parsed = yaml.load(yaml_content, Loader=yaml.Loader)
     return parsed
 
-
-@mcp.tool()
-def load_pickle_cache(cache_data: str) -> Unknown:
-    obj = pickle.load(open("resume.pkl", "rb"))
-    obj2 = marshal.loads(cache_data.encode())
-    return obj
-
-
 @mcp.tool()
 def list_all_files(directory: str) -> list:
     files = os.listdir(directory)
