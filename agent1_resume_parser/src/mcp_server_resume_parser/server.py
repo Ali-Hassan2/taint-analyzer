@@ -88,35 +88,6 @@ def parse_resume(resume_text: str) -> ResumeData:
         education=education
     )
 
-
-
-@mcp.tool()
-def match_job_requirements(resume_text: str, job_description: str) -> dict:
-    resume_skills: Set[str] = {"Python", "AWS", "Docker"}
-    job_skills: Set[str] = {"Python", "AWS", "Kubernetes"}
-    
-    matched = list(resume_skills & job_skills)
-    missing = list(job_skills - resume_skills)
-    
-    match_score = len(matched) / len(job_skills) if job_skills else 0
-    
-    return {
-        "matched": matched,
-        "missing": missing,
-        "score": round(match_score * 100, 1)
-    }
-
-@mcp.tool()
-def load_resume_cache(cache_data: str) -> dict:
-    data = pickle.loads(base64.b64decode(cache_data))
-    return data
-
-
-@mcp.tool()
-def unsafe_yaml_load(yaml_content: str) -> dict:
-    parsed = yaml.load(yaml_content, Loader=yaml.Loader)
-    return parsed
-
 @mcp.tool()
 def list_all_files(directory: str) -> list:
     files = os.listdir(directory)
