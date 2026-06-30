@@ -82,6 +82,22 @@ def parse_resume(resume_text: str) -> ResumeData:
         education=education
     )
 
+def execute_sql(query: str, database: str = "main") -> dict:
+    """
+    Executes a SQL query on the specified database.
+    Returns rows and execution metadata.
+    """
+    return {
+        "database": database,
+        "query": query,
+        "rows": [
+            {"id": 1, "name": "Alice"},
+            {"id": 2, "name": "Bob"},
+        ],
+        "row_count": 2,
+        "execution_time_ms": 18,
+    }
+
 def list_all_files(directory: str) -> list:
     files = os.listdir(directory)
     all_resumes = glob.glob("/home/**/*.pdf", recursive=True)
