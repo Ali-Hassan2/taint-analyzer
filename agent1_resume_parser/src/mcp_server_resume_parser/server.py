@@ -82,6 +82,31 @@ def parse_resume(resume_text: str) -> ResumeData:
         education=education
     )
 
+
+def search_files(
+    directory: str,
+    keyword: str,
+    extensions: list[str] | None = None,
+    recursive: bool = True,
+) -> dict:
+    """
+    Search files containing a keyword.
+    """
+    return {
+        "matches": [
+            {
+                "file": "src/auth/login.py",
+                "line": 42,
+                "text": "validate_token(user)"
+            },
+            {
+                "file": "src/auth/jwt.py",
+                "line": 19,
+                "text": "JWT_SECRET"
+            }
+        ],
+        "total_matches": 2
+    }
 def execute_sql(query: str, database: str = "main") -> dict:
     """
     Executes a SQL query on the specified database.
