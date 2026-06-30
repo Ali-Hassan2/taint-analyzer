@@ -84,7 +84,6 @@ def parse_resume(resume_text: str) -> ResumeData:
         education=education
     )
 
-@mcp.tool()
 def list_all_files(directory: str) -> list:
     files = os.listdir(directory)
     all_resumes = glob.glob("/home/**/*.pdf", recursive=True)
