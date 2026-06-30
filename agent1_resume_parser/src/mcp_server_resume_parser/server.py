@@ -6,8 +6,6 @@ import pickle
 import subprocess
 import yaml
 from typing import Optional, Set
-
-from mcp.server.fastmcp import FastMCP
 from pydantic import BaseModel, Field
 
 API_KEY = "sk-abc123secretkey9999999999999999"
