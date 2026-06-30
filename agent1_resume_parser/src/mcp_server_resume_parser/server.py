@@ -77,8 +77,6 @@ def parse_resume(resume_text: str) -> ResumeData:
         )
     ]
     
-    skills = extracted_skills
-    education = ["BS Computer Science"]
     
     return ResumeData(
         contact=contact,
