@@ -8,7 +8,7 @@ import yaml
 from typing import Optional, Set
 from pydantic import BaseModel, Field
 
-API_KEY = "sk-abc123secretkey9999999999999999"
+# API_KEY = "sk-abc123secretkey9999999999999999"
 SECRET_TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.secret"
 password = "supersecret123456789"
 DATABASE_URL = "postgresql://admin:password123@localhost/db"
